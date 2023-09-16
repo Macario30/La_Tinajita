@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="La Tinajita" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2551e944-a0ae-48a1-95db-24908e52402e">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`cod` AS productos_cod,
+     productos.`nombre` AS productos_nombre,
+     productos.`preciou` AS productos_preciou,
+     productos.`cantidad` AS productos_cantidad,
+     productos.`descripcion` AS productos_descripcion
+FROM
+     `productos` productos]]>
+	</queryString>
+	<field name="productos_cod" class="java.lang.Integer"/>
+	<field name="productos_nombre" class="java.lang.String"/>
+	<field name="productos_preciou" class="java.lang.Float"/>
+	<field name="productos_cantidad" class="java.lang.Integer"/>
+	<field name="productos_descripcion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="25" uuid="e7555e7c-80dc-464c-b680-25931dedbca4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="17"/>
+				</textElement>
+				<text><![CDATA[Variedades]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="572" height="54" uuid="3d5ccea6-a8a4-46f3-8ac8-5c1e2bd90056"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="33"/>
+				</textElement>
+				<text><![CDATA[La Tinajita]]></text>
+			</staticText>
+			<image>
+				<reportElement x="488" y="0" width="84" height="79" uuid="f103b057-b21d-408d-a5c0-409f68c95316"/>
+				<imageExpression><![CDATA["C:\\Users\\gmg\\Documents\\NetBeansProjects\\La_Tinajita\\src\\Form_Principal\\IconTinajita.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<break>
+				<reportElement x="0" y="24" width="100" height="1" uuid="1716d3aa-999e-4439-9f18-ae836320e85a"/>
+			</break>
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="25" uuid="7b78cab6-2ddc-4edc-a910-abcbf5d4c2eb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS" size="17"/>
+				</textElement>
+				<text><![CDATA[Inventario]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="49" height="20" uuid="06e392ea-d6c2-4b75-aa0e-35dd1775d5f5"/>
+				<text><![CDATA[Código ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="0" width="119" height="20" uuid="b0145e8f-0c9c-455f-8841-55ab9eee48e0"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="0" width="50" height="20" uuid="6b2a5b32-8c08-4b9f-9bf2-b78a285f3575"/>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="59" height="20" uuid="a5bef597-3d10-421a-a6d4-022294d19b27"/>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="0" width="207" height="20" uuid="6aa7cf86-fe8f-49b7-90fd-740826c835e2"/>
+				<text><![CDATA[productos_descripcion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="49" height="20" uuid="1cc5d953-7369-4cc7-baa1-265ae6d59529"/>
+				<textFieldExpression><![CDATA[$F{productos_cod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="63" y="0" width="119" height="20" uuid="bb46a88f-2fc4-4ce9-888e-83b7f61fe440"/>
+				<textFieldExpression><![CDATA[$F{productos_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="0" width="50" height="20" uuid="47e4eda4-8067-44ed-8e71-a6652c292f17"/>
+				<textFieldExpression><![CDATA[$F{productos_preciou}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="59" height="20" uuid="d194b59e-218e-4517-a732-13a71d77ff25"/>
+				<textFieldExpression><![CDATA[$F{productos_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="0" width="207" height="20" uuid="deabe03c-ab2b-4f9e-bdb6-adb3320ca169"/>
+				<textFieldExpression><![CDATA[$F{productos_descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="218" y="0" width="80" height="20" uuid="14881b98-89b6-4172-a78e-14bcc787fac5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="298" y="0" width="40" height="20" uuid="39b8a441-18fb-4cc4-8a6d-400a853b96e7"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
