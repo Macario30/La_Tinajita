@@ -99,7 +99,6 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(700, 600));
 
         jPanel_titulo.setBackground(new java.awt.Color(167, 226, 50));
         jPanel_titulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -483,7 +482,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addGap(6, 6, 6))
         );
 
-        jPanel_Tabla.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Tabla.setBackground(new java.awt.Color(153, 255, 102));
         jPanel_Tabla.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel_Base_de_datos.setBackground(new java.awt.Color(255, 255, 255));

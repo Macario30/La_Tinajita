@@ -4,18 +4,32 @@
  * and open the template in the editor.
  */
 package Facturacion;
-
+import Form_Principal.FormPrincipal;
+import Config.Conexion;
+import java.awt.List;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author gmg
  */
 public class Factura extends javax.swing.JFrame {
-
+    Conexion con1= new Conexion();
+    Connection conet;
+    DefaultTableModel modelo;
+    Statement st;
+    ResultSet rs;
+    int idc;
     /**
      * Creates new form Factura
      */
     public Factura() {
         initComponents();
+        Consultar();
     }
 
     /**
@@ -41,7 +55,7 @@ public class Factura extends javax.swing.JFrame {
         jTextField_nombre_buscar_f = new javax.swing.JTextField();
         jLabel_codigo1 = new javax.swing.JLabel();
         jTextField_codigo_buscar_f = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        jButton_Buscar_Factura = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel_codigo_f = new javax.swing.JLabel();
         jLabel_nombre_f = new javax.swing.JLabel();
@@ -57,9 +71,8 @@ public class Factura extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel_codigo_f1 = new javax.swing.JLabel();
-        jTextField_Contador = new javax.swing.JTextField();
         jLabel_codigo_f2 = new javax.swing.JLabel();
-        jTextField_Contador1 = new javax.swing.JTextField();
+        jLabel_codigo_f3 = new javax.swing.JLabel();
         jPanel_tabla = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_factura = new javax.swing.JTable();
@@ -102,7 +115,7 @@ public class Factura extends javax.swing.JFrame {
                     .addComponent(jLabel_variedades)
                     .addComponent(jLabel_tinajita, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_facturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
                 .addComponent(jIcon_Tinajita)
                 .addContainerGap())
         );
@@ -147,7 +160,12 @@ public class Factura extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("jButton3");
+        jButton_Buscar_Factura.setText("Buscar");
+        jButton_Buscar_Factura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Buscar_FacturaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_BusquedaLayout = new javax.swing.GroupLayout(jPanel_Busqueda);
         jPanel_Busqueda.setLayout(jPanel_BusquedaLayout);
@@ -158,12 +176,12 @@ public class Factura extends javax.swing.JFrame {
                 .addComponent(jLabel_codigo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField_codigo_buscar_f, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jLabel_codigo1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField_nombre_buscar_f, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
-                .addComponent(jButton3)
+                .addComponent(jButton_Buscar_Factura)
                 .addContainerGap())
         );
         jPanel_BusquedaLayout.setVerticalGroup(
@@ -175,7 +193,7 @@ public class Factura extends javax.swing.JFrame {
                     .addComponent(jTextField_nombre_buscar_f, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_codigo1)
                     .addComponent(jTextField_codigo_buscar_f, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jButton_Buscar_Factura))
                 .addContainerGap())
         );
 
@@ -305,21 +323,12 @@ public class Factura extends javax.swing.JFrame {
         jLabel_codigo_f1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel_codigo_f1.setText("Cantidad de Artículos: ");
 
-        jTextField_Contador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_ContadorActionPerformed(evt);
-            }
-        });
-
         jLabel_codigo_f2.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel_codigo_f2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel_codigo_f2.setText("Total de compra:");
 
-        jTextField_Contador1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Contador1ActionPerformed(evt);
-            }
-        });
+        jLabel_codigo_f3.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jLabel_codigo_f3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -328,16 +337,14 @@ public class Factura extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel_codigo_f1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                             .addComponent(jLabel_codigo_f2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_Contador1)
-                            .addComponent(jTextField_Contador))))
+                        .addComponent(jLabel_codigo_f3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -345,11 +352,9 @@ public class Factura extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_codigo_f1)
-                    .addComponent(jTextField_Contador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel_codigo_f3))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_Contador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_codigo_f2))
+                .addComponent(jLabel_codigo_f2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -374,8 +379,8 @@ public class Factura extends javax.swing.JFrame {
         jPanel_DatosLayout.setVerticalGroup(
             jPanel_DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_DatosLayout.createSequentialGroup()
-                .addComponent(jPanel_Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel_Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel_DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -414,7 +419,7 @@ public class Factura extends javax.swing.JFrame {
         jPanel_tablaLayout.setVerticalGroup(
             jPanel_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_tablaLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -436,7 +441,7 @@ public class Factura extends javax.swing.JFrame {
                 .addComponent(jPanel_Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_tabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -494,13 +499,9 @@ public class Factura extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField_ContadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ContadorActionPerformed
+    private void jButton_Buscar_FacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Buscar_FacturaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_ContadorActionPerformed
-
-    private void jTextField_Contador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Contador1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Contador1ActionPerformed
+    }//GEN-LAST:event_jButton_Buscar_FacturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -536,17 +537,40 @@ public class Factura extends javax.swing.JFrame {
             }
         });
     }
-
+   void Consultar(){
+       String sql= "select * from productos";
+        try{
+            conet= con1.getConnection();
+            st= conet.createStatement();
+            rs= st.executeQuery(sql);  
+            Object[] productos = new Object[5];
+            modelo= (DefaultTableModel) jTable_factura.getModel();
+            while (rs.next()){
+                productos[0]=rs.getInt("cod");
+                productos[1]=rs.getString("nombre");
+                productos[2]=rs.getFloat("preciou");
+                productos[3]=rs.getInt("cantidad");
+                productos[4]=rs.getString("descripcion");
+                
+                modelo.addRow(productos);
+            }
+            jTable_factura.setModel(modelo);
+        }
+        catch(SQLException e){
+            
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_Buscar_Factura;
     private javax.swing.JLabel jIcon_Tinajita;
     private javax.swing.JLabel jLabel_codigo;
     private javax.swing.JLabel jLabel_codigo1;
     private javax.swing.JLabel jLabel_codigo_f;
     private javax.swing.JLabel jLabel_codigo_f1;
     private javax.swing.JLabel jLabel_codigo_f2;
+    private javax.swing.JLabel jLabel_codigo_f3;
     private javax.swing.JLabel jLabel_facturacion;
     private javax.swing.JLabel jLabel_nombre_f;
     private javax.swing.JLabel jLabel_nombre_f1;
@@ -565,8 +589,6 @@ public class Factura extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable_factura;
-    private javax.swing.JTextField jTextField_Contador;
-    private javax.swing.JTextField jTextField_Contador1;
     private javax.swing.JTextField jTextField_cantidad_factura1;
     private javax.swing.JTextField jTextField_codigo_buscar_f;
     private javax.swing.JTextField jTextField_codigo_factura;
